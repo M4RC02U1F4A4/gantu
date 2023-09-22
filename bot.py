@@ -31,8 +31,9 @@ async def send_message():
             website = document.get('website', '')
             published = document.get('published', '')
             group = document.get('group', '')
+            country = document.get('country', '')
 
-            message = f"*{title}*\n\nWebsite: {website}\nCompromised by: {group}\n\n{published}" 
+            message = f"*{title}*\n\nWebsite: {website}\nCompromised by: {group}\nCountry: {country}\n\n{published}" 
             
             dataDB.update_one({'_id': id}, {'$set': {'notified': True}})
 
