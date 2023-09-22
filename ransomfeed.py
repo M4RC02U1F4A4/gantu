@@ -4,6 +4,11 @@ from datetime import datetime
 import requests
 import itertools
 from bs4 import BeautifulSoup
+import os
+import logging
+
+LOGLEVEL = os.getenv('LOGLEVEL').upper()
+logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s - %(message)s", level=LOGLEVEL)
 
 def parse_ransomfeed():
     ransomfeed_url = "https://ransomfeed.it/rss-complete.php"
@@ -51,6 +56,7 @@ def all_ransomfeed():
                     temp_result['website'] = str(h).replace("<p><b>Sito web:</b> ", "").replace("</p>", "")
             bf_result = soup.find('div', class_='infocard').find('h6')
             temp_result['published'] = datetime.strptime(str(bf_result).split(" dal gruppo <span")[0].replace("<h6>", "").replace("rilevato il ", ""), "%d-%m-%Y %H:%M:%S")
+        logging.debug(temp_result)
         result.append(temp_result)
     return result
 
