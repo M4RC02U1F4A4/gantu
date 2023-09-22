@@ -20,6 +20,7 @@ def main():
     else:
         for r in ransomfeed.parse_ransomfeed():
             try:
+                logging.debug(r)
                 dataDB.insert_one(r)
             except:
                 pass

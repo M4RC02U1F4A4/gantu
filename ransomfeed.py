@@ -37,7 +37,7 @@ def all_ransomfeed():
     url = "https://ransomfeed.it/index.php?page=post_details&id_post="
 
     result = []
-    for i in itertools.count(0):
+    for i in itertools.count(1):
         response = requests.get(f"{url}{i}")
 
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -56,8 +56,10 @@ def all_ransomfeed():
                     temp_result['website'] = str(h).replace("<p><b>Sito web:</b> ", "").replace("</p>", "")
             bf_result = soup.find('div', class_='infocard').find('h6')
             temp_result['published'] = datetime.strptime(str(bf_result).split(" dal gruppo <span")[0].replace("<h6>", "").replace("rilevato il ", ""), "%d-%m-%Y %H:%M:%S")
-        logging.debug(temp_result)
-        result.append(temp_result)
+            logging.debug(temp_result)
+            result.append(temp_result)
+        else:
+            break
     return result
 
 if __name__ == '__main__':
