@@ -12,10 +12,10 @@ def parse_ransomfeed():
         website_match = re.search(r'Target victim <b>website</b>: <i>(.*?)</i>', e['summary_detail']['value'])
 
         result = {
-            "hash": hash_match.group(1) if hash_match else "",
+            "hash": hash_match.group(1) if hash_match else "N/D",
             "victim": f"{e['title']}",
-            "country": country_match.group(1) if country_match else "",
-            "website": website_match.group(1) if website_match else "",
+            "country": country_match.group(1) if country_match else "N/D",
+            "website": website_match.group(1) if website_match else "N/D",
             "group": f"{e['tags'][0]['term']}"
         }
         print(result)
