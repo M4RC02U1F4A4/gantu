@@ -8,7 +8,7 @@ import os
 import logging
 
 LOGLEVEL = os.getenv('LOGLEVEL').upper()
-logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s - %(message)s", level=LOGLEVEL)
+logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=LOGLEVEL)
 
 def parse_ransomfeed():
     ransomfeed_url = "https://ransomfeed.it/rss-complete.php"
@@ -24,7 +24,7 @@ def parse_ransomfeed():
         temp_result = {
             "_id": hash_match.group(1) if hash_match else "N/D",
             "victim": f"{e['title']}",
-            "country": country_match.group(1) if country_match else "N/D",
+            "country": country_match.group(1).lower().strip() if country_match else "N/D",
             "website": website_match.group(1) if website_match else "N/D",
             "group": f"{e['tags'][0]['term']}",
             "notified": False,
@@ -55,12 +55,13 @@ def all_ransomfeed():
                 if "Hash di rilevamento:" in str(h):
                     temp_result['_id'] = str(h).replace('<p><b>Hash di rilevamento:</b> ','').split(' <br/>')[0]
                     temp_result['victim'] = str(bf_result).replace("<h2><span class=\"badge badge-info\">Vittima:</span> ", "").replace("</h2>", "")
-                    temp_result['country'] = str(h).split('<b>Vittima localizzata in:</b>')[1].replace("</p>", "")
+                    temp_result['country'] = str(h).split('<b>Vittima localizzata in:</b>')[1].replace("</p>", "").lower().strip()
                     
                 if "Sito web:" in str(h):
                     temp_result['website'] = str(h).replace("<p><b>Sito web:</b> ", "").replace("</p>", "")
             bf_result = soup.find('div', class_='infocard').find('h6')
             temp_result['published'] = datetime.strptime(str(bf_result).split(" dal gruppo <span")[0].replace("<h6>", "").replace("rilevato il ", ""), "%d-%m-%Y %H:%M:%S")
+            temp_result['group'] = str(bf_result).split("href=")[1].split(">")[1].split("<")[0]
             logging.debug(temp_result)
             result.append(temp_result)
     return result
