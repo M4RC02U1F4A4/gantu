@@ -8,7 +8,7 @@ TELEGRAM_API_KEY = os.environ.get('TELEGRAM_API_KEY')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
 
 
-logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s - %(message)s", level=logging.INFO)
+logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
 # set higher logging level for httpx to avoid all GET and POST requests being logged
 # logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
