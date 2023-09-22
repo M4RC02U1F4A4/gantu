@@ -34,10 +34,15 @@ def parse_ransomfeed():
     return result
     
 def all_ransomfeed():
+
+    ransomfeed_url = "https://ransomfeed.it/rss-complete.php"
+    ransomfeed_parsed = feedparser.parse(ransomfeed_url) 
+    total = int(ransomfeed_parsed['entries'][0]['link'].split('id_post=')[1]) + 1
+
     url = "https://ransomfeed.it/index.php?page=post_details&id_post="
 
     result = []
-    for i in itertools.count(1):
+    for i in range(total):
         response = requests.get(f"{url}{i}")
 
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -58,8 +63,6 @@ def all_ransomfeed():
             temp_result['published'] = datetime.strptime(str(bf_result).split(" dal gruppo <span")[0].replace("<h6>", "").replace("rilevato il ", ""), "%d-%m-%Y %H:%M:%S")
             logging.debug(temp_result)
             result.append(temp_result)
-        else:
-            break
     return result
 
 if __name__ == '__main__':
