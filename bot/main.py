@@ -7,9 +7,10 @@ import pymongo
 TELEGRAM_API_KEY = os.environ.get('TELEGRAM_API_KEY')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
 LOGLEVEL = os.getenv('LOGLEVEL').upper()
+MONGODBSTRING = os.getenv('MONGODBSTRING')
 
 
-logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level="WARNING")
+logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level="INFO")
 # set higher logging level for httpx to avoid all GET and POST requests being logged
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 async def send_message(): 
     telegram_bot = telegram.Bot(token=TELEGRAM_API_KEY)
-    mongo_client = pymongo.MongoClient(f"mongodb://localhost:27017")
+    mongo_client = pymongo.MongoClient(MONGODBSTRING)
     db = mongo_client.ransomware
     dataDB = db['data']
 
@@ -34,9 +35,8 @@ async def send_message():
             country = document.get('country', '')
 
             message = f"*{title}*\n\nWebsite: {website}\nCompromised by: {group}\nCountry: {country}\n\n{published}" 
-            
+            logging.info(document)
             dataDB.update_one({'_id': id}, {'$set': {'notified': True}})
-
             await telegram_bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message, parse_mode="Markdown")
     
 

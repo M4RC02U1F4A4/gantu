@@ -5,6 +5,7 @@ import os
 from datetime import datetime, timedelta
 
 LOGLEVEL = os.getenv('LOGLEVEL').upper()
+MONGODBSTRING = os.getenv('MONGODBSTRING')
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=LOGLEVEL)
 
 def stats():
@@ -40,7 +41,7 @@ def stats():
         statsDB.update_one({"_id":"stats"},{"$set":result})
     
 
-mongo_client = pymongo.MongoClient(f"mongodb://localhost:27017")
+mongo_client = pymongo.MongoClient(MONGODBSTRING)
 db = mongo_client.ransomware
 dataDB = db['data']
 statsDB = db['stats']
