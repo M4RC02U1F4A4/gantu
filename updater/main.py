@@ -21,5 +21,5 @@ for r in ransomfeed.parse_ransomfeed(notified):
         logging.debug(r)
         dataDB.insert_one(r)
     except Exception as e:
+        dataDB.update_one({"_id":r['_id']}, {"$set":{"victim":r['victim'], "country":r['country'], "website":r['website'], "group":r['group'], "published":r['published']}})
         logging.warn(e, exc_info=False)
-    
