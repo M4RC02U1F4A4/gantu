@@ -11,8 +11,12 @@ mongo_client = pymongo.MongoClient(MONGODBSTRING)
 db = mongo_client.ransomware
 dataDB = db['data']
 
+if not dataDB.find_one():
+    notified = True
+else:
+    notified = False
 
-for r in ransomfeed.parse_ransomfeed():
+for r in ransomfeed.parse_ransomfeed(notified):
     try:
         logging.debug(r)
         dataDB.insert_one(r)

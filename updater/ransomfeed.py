@@ -7,7 +7,7 @@ import logging
 LOGLEVEL = os.getenv('LOGLEVEL').upper()
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=LOGLEVEL)
 
-def parse_ransomfeed():
+def parse_ransomfeed(notified):
     ransomfeed_url = "https://ransomfeed.it/rss-complete.php"
 
     ransomfeed_parsed = feedparser.parse(ransomfeed_url)   
@@ -24,7 +24,7 @@ def parse_ransomfeed():
             "country": country_match.group(1).lower().strip() if country_match else "N/D",
             "website": website_match.group(1) if website_match else "N/D",
             "group": f"{e['tags'][0]['term']}",
-            "notified": False,
+            "notified": notified,
             "published": datetime.strptime(f"{e['published']}", "%a, %d %b %Y %H:%M:%S UTC")
         }
         result.append(temp_result)
