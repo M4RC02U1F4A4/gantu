@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gantu-db
+  namespace: gantu
+spec:
+  ports:
+  - name: gantu-db
+    targetPort: 27017
+    port: 27017
+  selector:
+    app: gantu-db
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gantu-db-wsl
+  namespace: gantu
+spec:
+  type: NodePort
+  ports:
+    - port: 27017
+      targetPort: 27017
+      nodePort: 30007
+  selector:
+    app: gantu-db

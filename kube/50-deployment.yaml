@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gantu-db
+  namespace: gantu  
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: gantu-db
+  template:
+    metadata:
+      name: gantu-db
+      namespace: gantu
+      labels:
+        app: gantu-db
+    spec:
+      containers:
+      - name: gantu-db-container
+        image: mongo
+      #   volumeMounts:
+      #   - name: vol
+      #     mountPath: /data/db
+      # volumes:
+      # - name: vol
+      #   persistentVolumeClaim:
+      #     claimName: gantu-db-pvc

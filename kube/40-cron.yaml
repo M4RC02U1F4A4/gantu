@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gantu-updater
+  namespace: gantu
+spec:
+  schedule: "*/2 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: gantu-updater
+            image: m4rc02u1f4a4/gantu-updater
+            imagePullPolicy: IfNotPresent
+            envFrom:
+            - configMapRef:
+                name: gantu-config
+          restartPolicy: OnFailure
+
+---
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gantu-bot
+  namespace: gantu
+spec:
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: gantu-bot
+            image: m4rc02u1f4a4/gantu-bot
+            imagePullPolicy: IfNotPresent
+            envFrom:
+            - configMapRef:
+                name: gantu-config
+          restartPolicy: OnFailure
