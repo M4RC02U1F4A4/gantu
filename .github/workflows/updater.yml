@@ -1,4 +1,4 @@
-name: New release
+name: New UPDATER release
 
 on:
   release:
@@ -25,11 +25,11 @@ jobs:
         with:
           push: true
           tags: m4rc02u1f4a4/gantu-updater:latest
-          context: updater/
+          context: updater/Dockerfile
 
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: m4rc02u1f4a4/gantu-updater:${{  github.ref_name }}
-          context: updater/
+          context: updater/Dockerfile

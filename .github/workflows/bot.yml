@@ -1,4 +1,4 @@
-name: New release
+name: New BOT release
 
 on:
   release:
@@ -25,11 +25,11 @@ jobs:
         with:
           push: true
           tags: m4rc02u1f4a4/gantu-bot:latest
-          context: bot/
+          context: updater/Dockerfile
 
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: m4rc02u1f4a4/gantu-bot:${{  github.ref_name }}
-          context: bot/
+          context: updater/Dockerfile
