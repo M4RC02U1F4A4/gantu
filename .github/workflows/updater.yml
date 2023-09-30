@@ -25,7 +25,7 @@ jobs:
         with:
           push: true
           tags: m4rc02u1f4a4/gantu-updater:latest
-          context: updater
+          context: "{{defaultContext}}:updater"
           file: Dockerfile
 
       - name: Build and push
@@ -33,5 +33,5 @@ jobs:
         with:
           push: true
           tags: m4rc02u1f4a4/gantu-updater:${{  github.ref_name }}
-          context: updater
+          context: "{{defaultContext}}:updater"
           file: Dockerfile
