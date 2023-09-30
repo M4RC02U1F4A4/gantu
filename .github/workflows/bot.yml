@@ -24,10 +24,12 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: m4rc02u1f4a4/gantu:latest
+          tags: m4rc02u1f4a4/gantu-bot:latest
+          context: bot/
 
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: m4rc02u1f4a4/gantu:${{  github.ref_name }}
+          tags: m4rc02u1f4a4/gantu-bot:${{  github.ref_name }}
+          context: bot/
