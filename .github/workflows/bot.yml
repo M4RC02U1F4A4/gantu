@@ -25,11 +25,13 @@ jobs:
         with:
           push: true
           tags: m4rc02u1f4a4/gantu-bot:latest
-          context: updater/Dockerfile
+          file: updater/Dockerfile
+          context: bot/
 
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: m4rc02u1f4a4/gantu-bot:${{  github.ref_name }}
-          context: updater/Dockerfile
+          file: updater/Dockerfile
+          context: bot/
