@@ -26,7 +26,7 @@ jobs:
           push: true
           tags: m4rc02u1f4a4/gantu-updater:latest
           context: updater
-          file: ./updater/Dockerfile
+          file: Dockerfile
 
       - name: Build and push
         uses: docker/build-push-action@v5.0.0
@@ -34,4 +34,4 @@ jobs:
           push: true
           tags: m4rc02u1f4a4/gantu-updater:${{  github.ref_name }}
           context: updater
-          file: ./updater/Dockerfile
+          file: Dockerfile
