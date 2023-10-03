@@ -39,11 +39,11 @@ async def send_message():
             message = f"*{title}*\n\nWebsite: {website}\nCompromised by: {group}\nCountry: {country}\n\n{published}" 
             logging.info(document)
             dataDB.update_one({'_id': id}, {'$set': {'notified': True}})
-            try:
-                requests.get(f"https://hc-ping.com/{BOT_HEALTHCHECKS_ID}", timeout=10)
-            except requests.RequestException as e:
-                logging.error("Ping failed: %s" % e)
             await telegram_bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message, parse_mode="Markdown")
+    try:
+        requests.get(f"https://hc-ping.com/{BOT_HEALTHCHECKS_ID}", timeout=10)
+    except requests.RequestException as e:
+        logging.error("Ping failed: %s" % e)
     
 
 def main():
