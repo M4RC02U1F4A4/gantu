@@ -24,7 +24,7 @@ async def send_message():
     db = mongo_client.ransomware
     dataDB = db['data']
 
-    query = {'notified': False, "country": "italy"}
+    query = {'notified': False, "country": { "$in": ["switzerland", "italy"] }}
     documents = dataDB.find(query)
 
     for document in documents:
