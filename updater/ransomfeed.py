@@ -25,7 +25,7 @@ def parse_ransomfeed(notified):
             "website": website_match.group(1) if website_match else None,
             "group": f"{e['tags'][0]['term']}",
             "notified": notified,
-            "published": datetime.strptime(f"{e['published']}", "%a, %d %b %Y %H:%M:%S UTC")
+            "published": datetime.strptime(f"{e['published']}", "%a, %d %b %Y %H:%M:%S CEST")
         }
         result.append(temp_result)
     return result
